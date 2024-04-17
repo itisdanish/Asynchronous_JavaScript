@@ -1,6 +1,6 @@
 const h1 = document.querySelector('h1')
 const container = document.querySelector('.container')
-const ul = document.querySelector('#results')
+const ol = document.querySelector('#results')
 const movie = document.querySelector('.movie')
 const reload = document.querySelector('.reload')
 const xhr = new XMLHttpRequest();
@@ -8,7 +8,9 @@ const xhr = new XMLHttpRequest();
 h1.innerText = 'AJAX & XHR Object'
 
 
-xhr.open('GET','./movies.json');
+// xhr.open('GET','./movies.json');
+// xhr.open('GET','https://api.github.com/users/itisdanish/repos');
+xhr.open('GET','https://jsonplaceholder.typicode.com/users');
 
 // The readyState property of an XHR object represents the state of the request. It can have the following numeric values:
 
@@ -24,10 +26,10 @@ xhr.onreadystatechange = function () {
         // console.log(JSON.parse(this.responseText))
         const data = JSON.parse(this.responseText)
 
-        data.forEach( movie =>{
+        data.forEach( user =>{
             const li = document.createElement('li');
-            li.innerHTML =`<strong>${movie.title}</strong> -[ ${movie.year} ]`
-            ul.appendChild(li)
+            li.innerHTML =`<strong>${user.name}</strong> <br> [ ${user.address.street} ] <hr>`
+            ol.appendChild(li)
 
         })
     }
