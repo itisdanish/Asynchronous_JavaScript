@@ -1,23 +1,28 @@
-function getData(endpoint, cb){
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', endpoint);
-
-    xhr.onreadystatechange = function(){
-        if(this.readyState ===4 & this.status === 200 )
-        cb(JSON.parse(this.responseText))
-    }
+const promise = new Promise((resolve,reject)=>{
+    // Do some async task
+    let error = false
     
     setTimeout(()=>{
-        xhr.send();
-    }, Math.floor(Math.random()*3000)+1000)
-}
+        if(!error){
+            console.log('Aysnc task complete');
+            resolve(
+                {title: 'Post One',body:'This is post one'},
+                {title: 'Post Two',body:'This is post Two'}
+            );
+        }
+            else {
+            reject('Connection Failed..')
+        }
+        
+    },500);
+})
 
-getData('./movies.json', (data)=>{
-    console.log(data);
-    getData('./actors.json', (data)=>{
-        console.log(data);
-        getData('./directors.json', (data)=>{
-            console.log(data);
-        })
-    });
-});
+promise
+.then((post)=>{
+    console.log('Promise Consumed..')
+    return post.title
+})
+.then((post)=>{ console.log(post)})
+.catch((err)=>{    console.log(err)})
+
+console.log('first')
